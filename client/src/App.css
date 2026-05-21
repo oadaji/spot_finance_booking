@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+  color: #000000;
+  font-family: ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 800px;
+  margin: 64px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* Card */
+.card {
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+/* Button */
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 24px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Section 1 — Search */
+.search-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.field input {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+}
+
+.field input::placeholder {
+  color: #999999;
+}
+
+.field input:focus {
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.field label {
+  font-size: 11px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+  color: #000000;
+}
+
+.field-date {
+  flex: 0.7;
+}
+
+.search-row .btn {
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+/* Section 2 — Rate Results */
+.rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.equipment-row {
+  display: flex;
+  gap: 16px;
+}
+
+.equip-tile {
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
+}
+
+.equip-label {
+  font-size: 13px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.equip-amount {
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+
+.equip-tile:hover .equip-amount {
+  background: #000000;
+  color: #ffffff;
+}
+
+.equip-selected .equip-amount {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Section 3 — Details */
+.detail-section {
+  margin-bottom: 24px;
+}
+
+.detail-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.detail-heading {
+  font-size: 12px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #000000;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.detail-key {
+  color: #666666;
+}
+
+.detail-total {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #000000;
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+/* Section 4 — Booking Form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
