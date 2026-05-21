@@ -84,6 +84,21 @@ body {
   color: #999999;
 }
 
+.error-msg {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.rate-meta {
+  font-size: 12px;
+  color: #666666;
+  margin-bottom: 16px;
+}
+
 .field input:focus {
   box-shadow: 0 0 0 1px #000000;
 }
