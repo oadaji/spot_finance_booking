@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { searchSpotRates, createQuotation } from "../lib/cmacgm";
+import { buildBookingPayload, equipIsoToBookingIso } from "../cma-cgm/bookingPayloadBuilder";
 
 const router = Router();
 
@@ -168,24 +169,59 @@ router.post("/cma-cgm/quotation", async (req: Request, res: Response) => {
 });
 
 // POST /api/cma-cgm/booking
-// Placeholder — booking form submission (will wire to booking API later)
+// Builds CMA CGM booking payload from form + spot offer, sends to API
 router.post("/cma-cgm/booking", async (req: Request, res: Response) => {
-  const { pol, pod, equipment, shipper, consignee } = req.body;
+  const { spotOffer, form } = req.body;
 
-  if (!pol || !pod || !equipment || !shipper || !consignee) {
-    res.status(400).json({ error: "Missing required booking fields" });
+  if (!spotOffer || !form) {
+    res.status(400).json({ error: "spotOffer and form are required" });
     return;
   }
 
-  // TODO: Wire to CMA CGM booking API when spec is provided
-  const mockBookingConfirmation = {
-    bookingRef: `CMACGM-${Date.now().toString(36).toUpperCase()}`,
-    status: "confirmed",
-    ...req.body,
-    message: "Booking confirmed. You will receive a confirmation email shortly.",
-  };
+  if (!form.shipper?.name || !form.consignee?.name) {
+    res.status(400).json({ error: "Shipper and consignee names are required" });
+    return;
+  }
 
-  res.json(mockBookingConfirmation);
+  if (!form.cargos || form.cargos.length === 0) {
+    res.status(400).json({ error: "At least one cargo entry is required" });
+    return;
+  }
+
+  try {
+    // Map equipment ISO codes for booking API
+    const cargos = form.cargos.map((c: any) => ({
+      ...c,
+      equipmentIsoCode: equipIsoToBookingIso(c.equipmentIsoCode),
+    }));
+
+    const payload = buildBookingPayload({ ...form, cargos }, spotOffer);
+
+    // TODO: POST to CMA CGM booking API when URL is confirmed
+    // Env var: CMACGM_BOOKING_URL
+    // Scope: likely different from instantquote — flag as TODO
+    const bookingUrl = process.env.CMACGM_BOOKING_URL;
+
+    if (bookingUrl) {
+      // TODO: Wire real API call
+      // const token = await getAccessToken(); // needs booking scope
+      // const apiRes = await fetch(bookingUrl, { method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      // return res.json(await apiRes.json());
+    }
+
+    // For now: log the payload and return confirmation with the built payload
+    console.log("Booking payload:", JSON.stringify(payload, null, 2));
+
+    res.json({
+      bookingRef: `ONEPORT-${Date.now().toString(36).toUpperCase()}`,
+      status: "pending",
+      message: "Booking request submitted. CMA CGM booking API integration pending — payload logged to server.",
+      payload,
+    });
+  } catch (err: any) {
+    console.error("Booking error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 function formatEquipType(iso: string): string {

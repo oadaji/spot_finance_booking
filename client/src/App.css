@@ -215,3 +215,60 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.party-block {
+  margin-top: 24px;
+}
+
+.notify-toggle {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.notify-toggle input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  font-size: 13px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  text-transform: none;
+  font-variant: normal;
+  letter-spacing: normal;
+  margin-top: 0;
+  font-size: 13px;
+}
+
+.radio-group input[type="radio"] {
+  cursor: pointer;
+}
+
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+  width: 100%;
+  resize: vertical;
+}
+
+textarea:focus {
+  box-shadow: 0 0 0 1px #000000;
+}

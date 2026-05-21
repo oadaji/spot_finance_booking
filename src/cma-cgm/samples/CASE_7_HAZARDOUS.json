@@ -1,0 +1,111 @@
+{
+  "electronicCustomerReference": "ONEPORT-BK-007",
+  "shippingCompany": "0001",
+  "agreementReference": "TA-CROSS-CMA",
+  "portOfLoading": { "internalCode": "INNSA" },
+  "portOfDischarge": { "internalCode": "SGSIN" },
+  "freightPaymentMode": "Collect",
+  "journeyLegs": [
+    {
+      "legSequence": 1,
+      "pointFrom": {
+        "location": { "name": "NAVA SHEVA", "internalCode": "INNSA" },
+        "callId": "40636142",
+        "departureDateLocal": "2026-07-07T01:30:00+01:00"
+      },
+      "pointTo": {
+        "location": { "name": "SINGAPORE", "internalCode": "SGSIN" },
+        "callId": "40636146",
+        "arrivalDateLocal": "2026-07-24T12:30:00-05:00"
+      },
+      "transportation": {
+        "meanOfTransport": "Vessel",
+        "vehicule": {
+          "vehiculeType": "Vessel",
+          "vehiculeName": "COS TBN 20",
+          "reference": "CMA0002218",
+          "referenceType": "IMO"
+        },
+        "voyage": {
+          "voyageReference": "130130E19",
+          "service": { "code": "AS6" }
+        }
+      }
+    }
+  ],
+  "parties": [
+    {
+      "code": null,
+      "bookingParty": true,
+      "role": "SHP",
+      "name": "OnePort 365 Ltd",
+      "address": {
+        "address1": "14 Wharf Road",
+        "address2": "Apapa",
+        "address3": "",
+        "zipCode": "100001",
+        "stateOrProvince": "Lagos",
+        "city": "Lagos",
+        "country": "NG"
+      },
+      "contact": { "name": "Commercial Team", "emailAddress": "commercial@oneport365.com" }
+    },
+    {
+      "code": null,
+      "bookingParty": false,
+      "role": "CEE",
+      "name": "Singapore Trading Co",
+      "address": {
+        "address1": "1 Harbourfront Walk",
+        "address2": "#03-01",
+        "address3": "",
+        "zipCode": "098585",
+        "stateOrProvince": "",
+        "city": "Singapore",
+        "country": "SG"
+      },
+      "contact": { "name": "Import Desk", "emailAddress": "imports@sgtrading.com" }
+    }
+  ],
+  "bookingRemarks": "Hazardous cargo booking - dangerous goods",
+  "cargos": [
+    {
+      "equipmentIsoCode": "22G1",
+      "equipmentQuantity": 1,
+      "hazardous": true,
+      "imdgAmendment": "40-20",
+      "commodityCode": "0101",
+      "commodityDescription": "Flammable liquid chemicals",
+      "weight": 18000,
+      "weightUOM": "KGM",
+      "volume": 25,
+      "volumeUOM": "MTQ",
+      "cargoItems": [
+        {
+          "dangerousGoods": [
+            {
+              "unNumber": "1263",
+              "properShippingName": "PAINT",
+              "packingGroup": "II",
+              "packInsCode": "P001",
+              "imoClass": "3",
+              "flashPoint": 23,
+              "grossWeight": 18000,
+              "netWeight": 16500,
+              "outerPackaging": {
+                "packageType": "DR",
+                "numberOfPackages": 80,
+                "description": "Steel drums"
+              },
+              "emergencyContactDetails": {
+                "name": "OnePort 365 DG Desk",
+                "phone": "+234-1-555-0199",
+                "email": "dg-emergency@oneport365.com"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
