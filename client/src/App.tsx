@@ -301,8 +301,10 @@ export default function App() {
             {searching ? "loading..." : "Search"}
           </button>
         </div>
-        {error && <div className="error-msg">{error}</div>}
       </div>
+
+      {/* Global error */}
+      {error && <div className="error-msg">{error}</div>}
 
       {/* Section 2 — Rate Results */}
       {result && (
@@ -397,8 +399,8 @@ export default function App() {
           )}
 
           <div className="card-actions">
-            <button className="btn" onClick={convertToQuotation} disabled={converting}>
-              {converting ? "loading..." : "Book"}
+            <button className="btn" onClick={() => setShowBooking(true)}>
+              Book
             </button>
           </div>
         </div>
@@ -496,8 +498,6 @@ export default function App() {
 
           {/* Phase 2 stubs — toggles will go here */}
           {/* TODO: Reefer, Hazardous, VAS, SOC, Carrier Haulage toggles */}
-
-          {error && <div className="error-msg" style={{ marginTop: 16 }}>{error}</div>}
 
           <div className="card-actions">
             <button className="btn" onClick={submitBooking} disabled={submitting}>
