@@ -110,13 +110,14 @@ export default function App() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || data.messages?.join(", ") || "No rates found");
-        return;
+      } else {
+        setResult(data);
       }
-      setResult(data);
     } catch {
       setError("Search failed — check connection");
+    } finally {
+      setSearching(false);
     }
-    setSearching(false);
   };
 
   const selectEquipment = (eq: Equipment) => {
