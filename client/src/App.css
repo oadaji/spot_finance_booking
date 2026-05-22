@@ -272,3 +272,132 @@ textarea {
 textarea:focus {
   box-shadow: 0 0 0 1px #000000;
 }
+
+/* Nav */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #000000;
+  margin-bottom: -24px;
+}
+
+.nav-title {
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.nav-links span {
+  cursor: pointer;
+  color: #666666;
+}
+
+.nav-links span:hover {
+  color: #000000;
+}
+
+.nav-active {
+  color: #000000 !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Confirmation */
+.confirm-header {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.confirm-note {
+  font-size: 12px;
+  color: #666666;
+  margin-top: 4px;
+}
+
+/* Bookings list */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.bookings-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #000000;
+  cursor: pointer;
+  user-select: none;
+  color: #666666;
+}
+
+.bookings-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.bookings-table tr:hover td {
+  background: #f5f5f5;
+}
+
+.bookings-table tbody tr {
+  cursor: pointer;
+}
+
+.table-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mono-text {
+  font-size: 13px;
+  color: #666666;
+}
+
+/* JSON block */
+.json-block {
+  font-size: 11px;
+  line-height: 1.4;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Card actions gap */
+.card-actions {
+  gap: 8px;
+}
+
+/* Error margin fix */
+.error-msg {
+  margin-top: 0;
+}

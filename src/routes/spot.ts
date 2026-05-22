@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { searchSpotRates, createQuotation } from "../lib/cmacgm";
 import { buildBookingPayload, equipIsoToBookingIso } from "../cma-cgm/bookingPayloadBuilder";
+import { getAllBookings, getBooking, createBooking, amendBooking, cancelBooking } from "../lib/bookingStore";
 
 const router = Router();
 
@@ -168,8 +169,7 @@ router.post("/cma-cgm/quotation", async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/cma-cgm/booking
-// Builds CMA CGM booking payload from form + spot offer, sends to API
+// POST /api/cma-cgm/booking — create booking (local mock, no CMA CGM call)
 router.post("/cma-cgm/booking", async (req: Request, res: Response) => {
   const { spotOffer, form } = req.body;
 
@@ -189,7 +189,6 @@ router.post("/cma-cgm/booking", async (req: Request, res: Response) => {
   }
 
   try {
-    // Map equipment ISO codes for booking API
     const cargos = form.cargos.map((c: any) => ({
       ...c,
       equipmentIsoCode: equipIsoToBookingIso(c.equipmentIsoCode),
@@ -197,31 +196,55 @@ router.post("/cma-cgm/booking", async (req: Request, res: Response) => {
 
     const payload = buildBookingPayload({ ...form, cargos }, spotOffer);
 
-    // TODO: POST to CMA CGM booking API when URL is confirmed
-    // Env var: CMACGM_BOOKING_URL
-    // Scope: likely different from instantquote — flag as TODO
-    const bookingUrl = process.env.CMACGM_BOOKING_URL;
+    // Simulate network latency
+    await new Promise(resolve => setTimeout(resolve, 800));
 
-    if (bookingUrl) {
-      // TODO: Wire real API call
-      // const token = await getAccessToken(); // needs booking scope
-      // const apiRes = await fetch(bookingUrl, { method: "POST", headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      // return res.json(await apiRes.json());
-    }
-
-    // For now: log the payload and return confirmation with the built payload
-    console.log("Booking payload:", JSON.stringify(payload, null, 2));
+    const booking = createBooking(spotOffer, payload);
 
     res.json({
-      bookingRef: `ONEPORT-${Date.now().toString(36).toUpperCase()}`,
-      status: "pending",
-      message: "Booking request submitted. CMA CGM booking API integration pending — payload logged to server.",
-      payload,
+      bookingReference: booking.bookingReference,
+      status: booking.status,
+      cutoffs: booking.cutoffs,
+      vesselDeparture: booking.cutoffs.vesselDeparture,
+      payload: booking.payload,
     });
   } catch (err: any) {
     console.error("Booking error:", err.message);
     res.status(500).json({ error: err.message });
   }
+});
+
+// GET /api/cma-cgm/bookings — list all bookings
+router.get("/cma-cgm/bookings", async (_req: Request, res: Response) => {
+  res.json(getAllBookings());
+});
+
+// GET /api/cma-cgm/bookings/:ref — single booking detail
+router.get("/cma-cgm/bookings/:ref", async (req: Request, res: Response) => {
+  const ref = req.params.ref as string;
+  const booking = getBooking(ref);
+  if (!booking) { res.status(404).json({ error: "Booking not found" }); return; }
+  res.json(booking);
+});
+
+// PUT /api/cma-cgm/bookings/:ref — amend booking (stub)
+router.put("/cma-cgm/bookings/:ref", async (req: Request, res: Response) => {
+  const ref = req.params.ref as string;
+  const { payload, changedFields } = req.body;
+  const booking = amendBooking(ref, payload, changedFields || []);
+  if (!booking) { res.status(404).json({ error: "Booking not found" }); return; }
+  res.json(booking);
+});
+
+// PUT /api/cma-cgm/bookings/:ref/cancel — cancel booking
+router.put("/cma-cgm/bookings/:ref/cancel", async (req: Request, res: Response) => {
+  const ref = req.params.ref as string;
+  const result = cancelBooking(ref);
+  if (!result.success) {
+    res.status(result.error?.includes("departed") ? 409 : 404).json({ error: result.error });
+    return;
+  }
+  res.json(result.booking);
 });
 
 function formatEquipType(iso: string): string {
